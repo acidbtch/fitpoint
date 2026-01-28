@@ -6,12 +6,17 @@
 }
 
 :root {
-    --primary-color: #007BFF;
-    --primary-hover: #0056b3;
+    --primary-color: #005BEA;
+    --primary-hover: #004FD0;
     --secondary-color: #6c757d;
     --success-color: #28a745;
     --danger-color: #dc3545;
     --warning-color: #ffc107;
+
+    /* Promo accents */
+    --promo-hot: #ff3d00;
+    --promo-soft: #ffd400;
+
     --white: #ffffff;
     --black: #000000;
     --gray-100: #f8f9fa;
@@ -542,15 +547,17 @@ button {
 }
 
 .badge {
-    padding: 4px 12px;
-    border-radius: 20px;
+    padding: 6px 10px;
+    border-radius: 10px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
     color: var(--white);
 }
 
 .badge.hit {
-    background: var(--danger-color);
+    background: var(--promo-hot);
 }
 
 .badge.new {
@@ -558,7 +565,7 @@ button {
 }
 
 .badge.discount {
-    background: var(--warning-color);
+    background: var(--promo-soft);
     color: var(--gray-900);
 }
 
@@ -624,10 +631,12 @@ button {
     color: var(--white);
     border-radius: var(--border-radius);
     font-weight: 600;
+    box-shadow: 0 10px 20px rgba(0, 91, 234, .18);
 }
 
 .btn-add-cart:hover {
     background: var(--primary-hover);
+    transform: translateY(-2px);
 }
 
 .btn-icon-favorite {
@@ -1107,6 +1116,10 @@ button {
         flex-direction: column;
         text-align: center;
     }
+
+    .promo-bar__right{ 
+        display:none; 
+    }
 }
 
 /* Sticky Mobile Buy Button */
@@ -1141,4 +1154,135 @@ button {
 
 .loading {
     animation: pulse 1.5s ease-in-out infinite;
+}
+
+
+/* =============================
+   Fitpoint promo UI layer
+   ============================= */
+
+/* Promo bar */
+.promo-bar{
+    background: var(--gray-900);
+    color: var(--white);
+}
+
+.promo-bar__content{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:10px 20px;
+}
+
+.promo-bar__left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.promo-link{
+    color: rgba(255,255,255,.9);
+    font-weight:600;
+}
+
+.promo-link:hover{ color: var(--white); }
+
+/* Promo chips */
+.promo-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 12px;
+    border-radius: 999px;
+    font-size:.85rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.10);
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.promo-chip:hover{
+    background: rgba(255,255,255,.16);
+    transform: translateY(-1px);
+}
+
+.promo-chip--hot{
+    background: var(--promo-hot);
+    border-color: var(--promo-hot);
+    color: var(--white);
+}
+
+.promo-chip--promo{
+    border-color: rgba(255,255,255,.28);
+}
+
+.promo-chip--ghost{
+    background: rgba(255,255,255,.16);
+    border-color: rgba(255,255,255,.22);
+}
+
+.hero-chips{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom: 14px;
+}
+
+/* Trust tiles */
+.section-title{
+    text-align:center;
+    font-size:2.2rem;
+    margin-bottom: 28px;
+}
+
+.trust-tiles{
+    padding: 60px 0;
+    background: var(--white);
+}
+
+.trust-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.trust-tile{
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius);
+    padding: 18px;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.trust-tile:hover{
+    transform: translateY(-4px);
+    border-color: var(--primary-color);
+}
+
+.trust-icon{
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: rgba(0, 91, 234, .10);
+    margin-bottom: 12px;
+    font-size: 1.25rem;
+}
+
+.trust-title{
+    font-weight: 800;
+    color: var(--gray-900);
+    margin-bottom: 6px;
+}
+
+.trust-text{
+    color: var(--gray-600);
+    font-size: .95rem;
 }
