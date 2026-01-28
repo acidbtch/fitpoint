@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог - SportNutrition.by</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .catalog-page {
+            padding: 40px 0;
+        }
+
+        .breadcrumbs {
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .breadcrumbs a {
+            color: var(--primary-color);
+        }
+
+        .catalog-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+        }
+
+        .filters-sidebar {
+            background: var(--gray-100);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .filter-section {
+            margin-bottom: 24px;
+        }
+
+        .filter-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .filter-checkbox {
+            cursor: pointer;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .filter-actions button {
+            flex: 1;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+        }
+
+        .btn-apply {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-reset {
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+        }
+
+        .catalog-main {
+            min-height: 600px;
+        }
+
+        .catalog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .catalog-header h1 {
+            font-size: 2rem;
+        }
+
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sort-select {
+            padding: 10px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            background: var(--white);
+            cursor: pointer;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+        }
+
+        .view-btn {
+            padding: 8px 12px;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+        }
+
+        .view-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+
+        .page-btn {
+            padding: 8px 16px;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+        }
+
+        .page-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .catalog-container {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Используем тот же header из index.html -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-content">
+                    <div class="logo">
+                        <a href="index.html">
+                            <svg width="40" height="40" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="18" fill="#007BFF" opacity="0.2"/>
+                                <path d="M20 8 L20 32 M12 20 L28 20" stroke="#007BFF" stroke-width="3"/>
+                            </svg>
+                            <span>SportNutrition</span>
+                        </a>
+                    </div>
+                    <div class="header-contacts">
+                        <a href="tel:+375291234567" class="contact-item">
+                            <span class="icon">📞</span> +375 (29) 123-45-67
+                        </a>
+                        <a href="mailto:info@sportnutrition.by" class="contact-item">
+                            <span class="icon">✉️</span> info@sportnutrition.by
+                        </a>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-login" onclick="openModal('loginModal')">
+                            <span class="icon">👤</span> Вход
+                        </button>
+                        <button class="btn-cart" onclick="window.location.href='cart.html'">
+                            <span class="icon">🛒</span>
+                            <span class="cart-count">2</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom sticky-header">
+            <div class="container">
+                <nav class="main-nav">
+                    <button class="burger-menu" onclick="toggleMobileMenu()">☰</button>
+                    <ul class="nav-menu" id="navMenu">
+                        <li><a href="catalog.html" style="color: var(--primary-color);">📋 Каталог</a></li>
+                        <li><a href="index.html#about">О компании</a></li>
+                        <li><a href="blog.html">Статьи</a></li>
+                        <li><a href="delivery.html">Доставка и оплата</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Поиск товаров..." id="searchInput" onkeyup="searchProducts()">
+                        <button class="search-btn">🔍</button>
+                        <div class="search-results" id="searchResults"></div>
+                    </div>
+                    <button class="btn-favorites">❤️</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="catalog-page">
+        <div class="container">
+            <div class="breadcrumbs">
+                <a href="index.html">Главная</a> › <a href="catalog.html">Каталог</a> › <strong>Спортивное питание</strong>
+            </div>
+
+            <div class="catalog-container">
+                <!-- Фильтры -->
+                <aside class="filters-sidebar">
+                    <div class="filter-section">
+                        <h3>Категория</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat1" class="filter-checkbox">
+                            <label for="cat1">Протеин (145)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat2" class="filter-checkbox">
+                            <label for="cat2">Гейнеры (67)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat3" class="filter-checkbox">
+                            <label for="cat3">Аминокислоты (92)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat4" class="filter-checkbox">
+                            <label for="cat4">Креатин (45)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat5" class="filter-checkbox">
+                            <label for="cat5">Предтренники (38)</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Бренд</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="brand1" class="filter-checkbox">
+                            <label for="brand1">Optimum Nutrition</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="brand2" class="filter-checkbox">
+                            <label for="brand2">NOW Foods</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="brand3" class="filter-checkbox">
+                            <label for="brand3">Solgar</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="brand4" class="filter-checkbox">
+                            <label for="brand4">MyProtein</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Форма выпуска</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="form1" class="filter-checkbox">
+                            <label for="form1">Порошок</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="form2" class="filter-checkbox">
+                            <label for="form2">Капсулы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="form3" class="filter-checkbox">
+                            <label for="form3">Таблетки</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="form4" class="filter-checkbox">
+                            <label for="form4">Жидкость</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Специальные отметки</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="mark1" class="filter-checkbox">
+                            <label for="mark1">Без сахара</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="mark2" class="filter-checkbox">
+                            <label for="mark2">Веган</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="mark3" class="filter-checkbox">
+                            <label for="mark3">Без лактозы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="mark4" class="filter-checkbox">
+                            <label for="mark4">Для детей</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button class="btn-apply" onclick="applyFilters()">Применить</button>
+                        <button class="btn-reset" onclick="resetFilters()">Сбросить</button>
+                    </div>
+                </aside>
+
+                <!-- Список товаров -->
+                <div class="catalog-main">
+                    <div class="catalog-header">
+                        <h1>Спортивное питание</h1>
+                        <div class="sort-controls">
+                            <select class="sort-select" onchange="sortProducts(this.value)">
+                                <option value="popular">По популярности</option>
+                                <option value="price-asc">Цена: низкая → высокая</option>
+                                <option value="price-desc">Цена: высокая → низкая</option>
+                                <option value="rating">По рейтингу</option>
+                                <option value="new">Новинки</option>
+                            </select>
+                            <div class="view-toggle">
+                                <button class="view-btn active">⊞</button>
+                                <button class="view-btn">☰</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="products-grid">
+                        <!-- Товар 1 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="badge hit">ХИТ</span>
+                                <span class="badge discount">-20%</span>
+                            </div>
+                            <div class="product-image" onclick="window.location.href='product.html'">
+                                <div class="placeholder-img">🥤</div>
+                            </div>
+                            <h3 class="product-title">Optimum Nutrition Whey Gold Standard 2.27 кг</h3>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="reviews">(127)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">120 руб.</span>
+                                <span class="current-price">96 руб.</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(1)">В корзину</button>
+                            <button class="btn-icon-favorite">❤️</button>
+                        </div>
+
+                        <!-- Товар 2 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="badge new">НОВИНКА</span>
+                            </div>
+                            <div class="product-image" onclick="window.location.href='product.html'">
+                                <div class="placeholder-img">💪</div>
+                            </div>
+                            <h3 class="product-title">Serious Mass Gainer 5.45 кг</h3>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐</span>
+                                <span class="reviews">(89)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">85 руб.</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(2)">В корзину</button>
+                            <button class="btn-icon-favorite">❤️</button>
+                        </div>
+
+                        <!-- Товар 3 -->
+                        <div class="product-card">
+                            <div class="product-image" onclick="window.location.href='product.html'">
+                                <div class="placeholder-img">⚡</div>
+                            </div>
+                            <h3 class="product-title">BCAA 2:1:1 порошок 500г</h3>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="reviews">(164)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">45 руб.</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(3)">В корзину</button>
+                            <button class="btn-icon-favorite">❤️</button>
+                        </div>
+
+                        <!-- Товар 4 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="badge discount">-15%</span>
+                            </div>
+                            <div class="product-image" onclick="window.location.href='product.html'">
+                                <div class="placeholder-img">🔥</div>
+                            </div>
+                            <h3 class="product-title">Креатин моногидрат 300г</h3>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="reviews">(203)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">35 руб.</span>
+                                <span class="current-price">30 руб.</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(4)">В корзину</button>
+                            <button class="btn-icon-favorite">❤️</button>
+                        </div>
+
+                        <!-- Товар 5 -->
+                        <div class="product-card">
+                            <div class="product-image" onclick="window.location.href='product.html'">
+                                <div class="placeholder-img">🚀</div>
+                            </div>
+                            <h3 class="product-title">Предтренировочный комплекс C4</h3>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐</span>
+                                <span class="reviews">(98)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">55 руб.</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(5)">В корзину</button>
+                            <button class="btn-icon-favorite">❤️</button>
+                        </div>
+
+                        <!-- Товар 6 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="badge hit">ХИТ</span>
+                            </div>
+                            <div class="product-image" onclick="window.location.href='product.html'">
+                                <div class="placeholder-img">💊</div>
+                            </div>
+                            <h3 class="product-title">Глютамин 500г порошок</h3>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐</span>
+                                <span class="reviews">(76)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">38 руб.</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(6)">В корзину</button>
+                            <button class="btn-icon-favorite">❤️</button>
+                        </div>
+
+                        <!-- Добавьте больше товаров по аналогии -->
+                    </div>
+
+                    <!-- Пагинация -->
+                    <div class="pagination">
+                        <button class="page-btn">‹</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">4</button>
+                        <button class="page-btn">5</button>
+                        <button class="page-btn">›</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer - копируем из index.html -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <svg width="40" height="40" viewBox="0 0 40 40">
+                            <circle cx="20" cy="20" r="18" fill="#007BFF" opacity="0.3"/>
+                            <path d="M20 8 L20 32 M12 20 L28 20" stroke="#007BFF" stroke-width="3"/>
+                        </svg>
+                        <span>SportNutrition</span>
+                    </div>
+                    <p>Качественное спортивное питание и БАДы с доставкой по Беларуси</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Контакты</h4>
+                    <p>📍 г. Минск, ул. Победителей 23</p>
+                    <p>📞 +375 (29) 123-45-67</p>
+                    <p>✉️ info@sportnutrition.by</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SportNutrition.by</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html>

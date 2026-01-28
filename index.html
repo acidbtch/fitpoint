@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportNutrition.by - БАДы и спортивное питание</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-content">
+                    <div class="logo">
+                        <a href="index.html">
+                            <svg width="40" height="40" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="18" fill="#007BFF" opacity="0.2"/>
+                                <path d="M20 8 L20 32 M12 20 L28 20" stroke="#007BFF" stroke-width="3"/>
+                            </svg>
+                            <span>SportNutrition</span>
+                        </a>
+                    </div>
+                    <div class="header-contacts">
+                        <a href="tel:+375291234567" class="contact-item">
+                            <span class="icon">📞</span> +375 (29) 123-45-67
+                        </a>
+                        <a href="mailto:info@sportnutrition.by" class="contact-item">
+                            <span class="icon">✉️</span> info@sportnutrition.by
+                        </a>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-login" onclick="openModal('loginModal')">
+                            <span class="icon">👤</span> Вход
+                        </button>
+                        <button class="btn-cart" onclick="window.location.href='cart.html'">
+                            <span class="icon">🛒</span>
+                            <span class="cart-count">2</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom sticky-header">
+            <div class="container">
+                <nav class="main-nav">
+                    <button class="burger-menu" onclick="toggleMobileMenu()">☰</button>
+                    <ul class="nav-menu" id="navMenu">
+                        <li class="has-dropdown">
+                            <a href="catalog.html">📋 Каталог</a>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-grid">
+                                    <div class="dropdown-column">
+                                        <h4>По целям</h4>
+                                        <a href="catalog.html?cat=immunity">Иммунитет</a>
+                                        <a href="catalog.html?cat=energy">Энергия и мозг</a>
+                                        <a href="catalog.html?cat=sleep">Спокойствие и сон</a>
+                                        <a href="catalog.html?cat=beauty">Красота (Кожа, волосы)</a>
+                                        <a href="catalog.html?cat=weight">Похудение</a>
+                                    </div>
+                                    <div class="dropdown-column">
+                                        <h4>Спортивное питание</h4>
+                                        <a href="catalog.html?cat=protein">Протеин</a>
+                                        <a href="catalog.html?cat=gainers">Гейнеры</a>
+                                        <a href="catalog.html?cat=amino">Аминокислоты</a>
+                                        <a href="catalog.html?cat=creatine">Креатин</a>
+                                    </div>
+                                    <div class="dropdown-column">
+                                        <h4>Витамины и минералы</h4>
+                                        <a href="catalog.html?cat=multi">Мультивитамины</a>
+                                        <a href="catalog.html?cat=vitamins">Отдельные витамины</a>
+                                        <a href="catalog.html?cat=minerals">Минералы</a>
+                                        <a href="catalog.html?cat=omega">Омега и Жиры</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="#about">О компании</a></li>
+                        <li><a href="blog.html">Статьи</a></li>
+                        <li><a href="delivery.html">Доставка и оплата</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Поиск товаров..." id="searchInput" onkeyup="searchProducts()">
+                        <button class="search-btn">🔍</button>
+                        <div class="search-results" id="searchResults"></div>
+                    </div>
+                    <button class="btn-favorites">❤️</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider">
+        <div class="slider-container">
+            <div class="slide active" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="container">
+                    <div class="slide-content">
+                        <h1>Скидка 25% на весь протеин!</h1>
+                        <p>Набирай массу с выгодой. Акция действует до конца месяца</p>
+                        <button class="btn-primary" onclick="window.location.href='catalog.html?cat=protein'">Купить сейчас</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="container">
+                    <div class="slide-content">
+                        <h1>Новинка: Комплекс витаминов D3+K2</h1>
+                        <p>Укрепляй иммунитет круглый год</p>
+                        <button class="btn-primary" onclick="window.location.href='product.html'">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div class="container">
+                    <div class="slide-content">
+                        <h1>Бесплатная доставка от 50 руб!</h1>
+                        <p>Закажи сегодня и получи завтра</p>
+                        <button class="btn-primary" onclick="window.location.href='catalog.html'">В каталог</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-nav">
+            <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
+            <div class="slider-dots">
+                <span class="dot active" onclick="goToSlide(0)"></span>
+                <span class="dot" onclick="goToSlide(1)"></span>
+                <span class="dot" onclick="goToSlide(2)"></span>
+            </div>
+            <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories-section">
+        <div class="container">
+            <h2>Категории товаров</h2>
+            <div class="categories-grid">
+                <a href="catalog.html?cat=goals" class="category-card">
+                    <div class="category-image">
+                        <div class="category-icon">🎯</div>
+                    </div>
+                    <h3>По целям</h3>
+                    <p>Иммунитет, энергия, сон, красота</p>
+                </a>
+                <a href="catalog.html?cat=sports" class="category-card">
+                    <div class="category-image">
+                        <div class="category-icon">💪</div>
+                    </div>
+                    <h3>Спортивное питание</h3>
+                    <p>Протеин, гейнеры, BCAA</p>
+                </a>
+                <a href="catalog.html?cat=vitamins" class="category-card">
+                    <div class="category-image">
+                        <div class="category-icon">💊</div>
+                    </div>
+                    <h3>Витамины и минералы</h3>
+                    <p>Мультивитамины, D3, Магний</p>
+                </a>
+                <a href="catalog.html?cat=accessories" class="category-card">
+                    <div class="category-image">
+                        <div class="category-icon">🎒</div>
+                    </div>
+                    <h3>Аксессуары</h3>
+                    <p>Шейкеры, таблетницы</p>
+                </a>
+                <a href="catalog.html?cat=gym" class="category-card">
+                    <div class="category-image">
+                        <div class="category-icon">🏋️</div>
+                    </div>
+                    <h3>Спортинвентарь</h3>
+                    <p>Фитнес-резинки, коврики</p>
+                </a>
+                <a href="catalog.html?cat=snacks" class="category-card">
+                    <div class="category-image">
+                        <div class="category-icon">🍫</div>
+                    </div>
+                    <h3>Полезные перекусы</h3>
+                    <p>Батончики, печенье</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Products -->
+    <section class="top-products">
+        <div class="container">
+            <h2>Хиты продаж</h2>
+            <div class="products-slider">
+                <button class="slider-btn prev" onclick="scrollProducts(-1)">‹</button>
+                <div class="products-container" id="topProducts">
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge hit">ХИТ</span>
+                            <span class="badge discount">-20%</span>
+                        </div>
+                        <div class="product-image" onclick="window.location.href='product.html'">
+                            <div class="placeholder-img">🥤</div>
+                        </div>
+                        <h3 class="product-title">Optimum Nutrition Whey Gold Standard</h3>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="reviews">(127)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="old-price">120 руб.</span>
+                            <span class="current-price">96 руб.</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(1)">В корзину</button>
+                        <button class="btn-icon-favorite">❤️</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge new">НОВИНКА</span>
+                        </div>
+                        <div class="product-image" onclick="window.location.href='product.html'">
+                            <div class="placeholder-img">💊</div>
+                        </div>
+                        <h3 class="product-title">Витамин D3 5000 МЕ + K2</h3>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="reviews">(89)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">24 руб.</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(2)">В корзину</button>
+                        <button class="btn-icon-favorite">❤️</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge hit">ХИТ</span>
+                        </div>
+                        <div class="product-image" onclick="window.location.href='product.html'">
+                            <div class="placeholder-img">⚡</div>
+                        </div>
+                        <h3 class="product-title">BCAA 2:1:1 порошок</h3>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐</span>
+                            <span class="reviews">(64)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">45 руб.</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(3)">В корзину</button>
+                        <button class="btn-icon-favorite">❤️</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image" onclick="window.location.href='product.html'">
+                            <div class="placeholder-img">🔥</div>
+                        </div>
+                        <h3 class="product-title">L-Карнитин 3000 жидкий</h3>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐</span>
+                            <span class="reviews">(51)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">32 руб.</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(4)">В корзину</button>
+                        <button class="btn-icon-favorite">❤️</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="badge discount">-15%</span>
+                        </div>
+                        <div class="product-image" onclick="window.location.href='product.html'">
+                            <div class="placeholder-img">🐟</div>
+                        </div>
+                        <h3 class="product-title">Омега-3 1000 мг</h3>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="reviews">(142)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="old-price">28 руб.</span>
+                            <span class="current-price">24 руб.</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(5)">В корзину</button>
+                        <button class="btn-icon-favorite">❤️</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image" onclick="window.location.href='product.html'">
+                            <div class="placeholder-img">🌙</div>
+                        </div>
+                        <h3 class="product-title">Магний + B6 для сна</h3>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐</span>
+                            <span class="reviews">(73)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">18 руб.</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(6)">В корзину</button>
+                        <button class="btn-icon-favorite">❤️</button>
+                    </div>
+                </div>
+                <button class="slider-btn next" onclick="scrollProducts(1)">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>О нашей компании</h2>
+                    <p>SportNutrition.by — это современный интернет-магазин качественных БАДов и спортивного питания в Беларуси. Мы работаем с 2020 года и за это время завоевали доверие более 10 000 клиентов.</p>
+                    <p>Наша миссия — сделать здоровый образ жизни доступным для каждого. Мы тщательно отбираем продукцию от проверенных производителей и гарантируем подлинность каждого товара.</p>
+                    <ul class="about-features">
+                        <li>✓ Только сертифицированная продукция</li>
+                        <li>✓ Гарантия качества и подлинности</li>
+                        <li>✓ Консультация специалистов</li>
+                        <li>✓ Доставка по всей Беларуси</li>
+                    </ul>
+                    <button class="btn-secondary">Подробнее</button>
+                </div>
+                <div class="about-image">
+                    <div class="placeholder-about">🏆</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages -->
+    <section class="advantages">
+        <div class="container">
+            <div class="advantages-grid">
+                <div class="advantage-item">
+                    <div class="advantage-icon">🚚</div>
+                    <h3>Бесплатная доставка</h3>
+                    <p>При заказе от 50 рублей по Минску</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">✅</div>
+                    <h3>Гарантия качества</h3>
+                    <p>Все товары сертифицированы</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">🎓</div>
+                    <h3>Консультация</h3>
+                    <p>Помощь в выборе от специалистов</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">💳</div>
+                    <h3>Удобная оплата</h3>
+                    <p>Наличными или картой</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <h2>Часто задаваемые вопросы</h2>
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Как оформить заказ?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Добавьте нужные товары в корзину, нажмите "Оформить заказ", зарегистрируйтесь или войдите в личный кабинет, заполните данные доставки и выберите способ оплаты. После подтверждения вы получите SMS с номером заказа.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Какие способы оплаты доступны?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Мы принимаем оплату картой онлайн, наличными при получении и картой курьеру. Все онлайн-платежи защищены 3D-Secure.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Сколько стоит доставка?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Доставка по Минску — 5 руб., бесплатно при заказе от 50 руб. Доставка по Беларуси — от 7 руб. в зависимости от региона. Самовывоз всегда бесплатный.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Как вернуть товар?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Вы можете вернуть товар в течение 14 дней с момента получения, если он не был в употреблении и сохранена упаковка. Свяжитесь с нами по телефону или email для оформления возврата.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Есть ли у вас сертификаты на продукцию?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Да, вся наша продукция имеет необходимые сертификаты соответствия и декларации. Вы можете запросить документы на любой товар через форму обратной связи.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <svg width="40" height="40" viewBox="0 0 40 40">
+                            <circle cx="20" cy="20" r="18" fill="#007BFF" opacity="0.3"/>
+                            <path d="M20 8 L20 32 M12 20 L28 20" stroke="#007BFF" stroke-width="3"/>
+                        </svg>
+                        <span>SportNutrition</span>
+                    </div>
+                    <p>Качественное спортивное питание и БАДы с доставкой по Беларуси</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">VK</a>
+                        <a href="#" class="social-icon">TG</a>
+                        <a href="#" class="social-icon">IG</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="#about">О компании</a></li>
+                        <li><a href="delivery.html">Доставка и оплата</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Контакты</h4>
+                    <p>📍 г. Минск, ул. Победителей 23</p>
+                    <p>📞 +375 (29) 123-45-67</p>
+                    <p>✉️ info@sportnutrition.by</p>
+                    <p>🕐 Пн-Вс: 9:00 - 21:00</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Подписка на новости</h4>
+                    <p>Получайте актуальные акции и промокоды</p>
+                    <form class="subscribe-form" onsubmit="subscribe(event)">
+                        <input type="email" placeholder="Ваш email" required>
+                        <button type="submit">→</button>
+                    </form>
+                    <small>Подписываясь, вы получите промокод на скидку 10%</small>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SportNutrition.by. Все права защищены.</p>
+                <div class="footer-links">
+                    <a href="privacy.html">Политика конфиденциальности</a>
+                    <a href="terms.html">Пользовательское соглашение</a>
+                    <a href="offer.html">Публичная оферта</a>
+                </div>
+                <div class="payment-methods">
+                    💳 VISA | MasterCard | Наличные
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            <h2>Вход в личный кабинет</h2>
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchTab('sms')">По SMS</button>
+                <button class="tab-btn" onclick="switchTab('email')">По Email</button>
+            </div>
+            <form id="smsLogin" class="login-form">
+                <div class="form-group">
+                    <label>Номер телефона</label>
+                    <input type="tel" placeholder="+375 (29) 123-45-67" required>
+                </div>
+                <button type="submit" class="btn-primary">Получить код</button>
+                <p class="form-note">Вам придет SMS с кодом подтверждения</p>
+            </form>
+            <form id="emailLogin" class="login-form" style="display:none;">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <div class="form-checkbox">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Запомнить меня</label>
+                </div>
+                <button type="submit" class="btn-primary">Войти</button>
+                <a href="#" class="forgot-password">Забыли пароль?</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

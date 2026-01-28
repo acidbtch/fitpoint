@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimum Nutrition Whey Gold Standard - SportNutrition.by</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .product-page {
+            padding: 40px 0;
+        }
+
+        .product-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .product-gallery {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .main-image-container {
+            position: relative;
+            aspect-ratio: 1;
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-in;
+        }
+
+        .main-product-image {
+            font-size: 15rem;
+        }
+
+        .product-badge-overlay {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .thumbnail {
+            aspect-ratio: 1;
+            background: var(--gray-100);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: var(--transition);
+        }
+
+        .thumbnail:hover, .thumbnail.active {
+            border-color: var(--primary-color);
+        }
+
+        .product-info h1 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .product-sku {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .product-rating-big {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rating-stars {
+            font-size: 1.2rem;
+        }
+
+        .rating-count {
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .availability {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .in-stock {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .product-price-big {
+            margin: 24px 0;
+        }
+
+        .price-old-big {
+            text-decoration: line-through;
+            color: var(--gray-600);
+            font-size: 1.25rem;
+            margin-right: 12px;
+        }
+
+        .price-current-big {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .price-discount {
+            display: inline-block;
+            background: var(--warning-color);
+            color: var(--gray-900);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        .price-per-unit {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        .short-description {
+            margin: 24px 0;
+            font-size: 1.05rem;
+            color: var(--gray-600);
+        }
+
+        .product-variants {
+            margin: 24px 0;
+        }
+
+        .variant-label {
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .variant-options {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .variant-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            background: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .variant-btn:hover {
+            border-color: var(--primary-color);
+        }
+
+        .variant-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .quantity-label {
+            font-weight: 600;
+        }
+
+        .quantity-input {
+            display: flex;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .qty-btn {
+            padding: 12px 16px;
+            background: var(--gray-100);
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .qty-btn:hover {
+            background: var(--gray-200);
+        }
+
+        .qty-field {
+            width: 60px;
+            text-align: center;
+            border: none;
+            font-size: 1.1rem;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .btn-buy-main {
+            padding: 16px 32px;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .btn-buy-main:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-quick-buy {
+            padding: 16px 24px;
+            background: var(--white);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+        }
+
+        .btn-icon-action {
+            padding: 16px;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .promo-input-group {
+            display: flex;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .promo-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+        }
+
+        .delivery-info {
+            background: var(--gray-100);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin: 24px 0;
+        }
+
+        .delivery-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .delivery-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .product-tabs {
+            margin-top: 60px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid var(--gray-200);
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table tr {
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .specs-table td {
+            padding: 12px;
+        }
+
+        .specs-table td:first-child {
+            color: var(--gray-600);
+            width: 40%;
+        }
+
+        .specs-table td:last-child {
+            font-weight: 500;
+        }
+
+        .review-item {
+            padding: 20px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .review-author {
+            font-weight: 600;
+        }
+
+        .review-date {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .cross-sell-section {
+            background: var(--gray-100);
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .bundle-offer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin-bottom: 40px;
+        }
+
+        .bundle-products {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin: 24px 0;
+        }
+
+        .bundle-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .bundle-plus {
+            font-size: 2rem;
+        }
+
+        .bundle-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+        }
+
+        .sticky-buy-btn {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .product-main {
+                grid-template-columns: 1fr;
+            }
+
+            .product-gallery {
+                position: static;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .sticky-buy-btn {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 16px;
+                background: var(--white);
+                box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+                z-index: 100;
+            }
+
+            .sticky-buy-btn button {
+                width: 100%;
+                padding: 16px;
+                font-size: 1.1rem;
+                background: var(--primary-color);
+                color: var(--white);
+                border-radius: var(--border-radius);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-content">
+                    <div class="logo">
+                        <a href="index.html">
+                            <svg width="40" height="40" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="18" fill="#007BFF" opacity="0.2"/>
+                                <path d="M20 8 L20 32 M12 20 L28 20" stroke="#007BFF" stroke-width="3"/>
+                            </svg>
+                            <span>SportNutrition</span>
+                        </a>
+                    </div>
+                    <div class="header-contacts">
+                        <a href="tel:+375291234567" class="contact-item">
+                            <span class="icon">📞</span> +375 (29) 123-45-67
+                        </a>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-login" onclick="openModal('loginModal')">
+                            <span class="icon">👤</span> Вход
+                        </button>
+                        <button class="btn-cart" onclick="window.location.href='cart.html'">
+                            <span class="icon">🛒</span>
+                            <span class="cart-count">2</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="product-page">
+        <div class="container">
+            <div class="breadcrumbs">
+                <a href="index.html">Главная</a> › <a href="catalog.html">Каталог</a> › <a href="catalog.html?cat=protein">Протеин</a> › <strong>Optimum Nutrition Whey Gold Standard</strong>
+            </div>
+
+            <div class="product-main">
+                <!-- Галерея -->
+                <div class="product-gallery">
+                    <div class="main-image-container" onclick="openLightbox()">
+                        <div class="product-badge-overlay">
+                            <span class="badge hit">ХИТ</span>
+                            <span class="badge discount">-20%</span>
+                        </div>
+                        <div class="main-product-image">🥤</div>
+                    </div>
+                    <div class="thumbnails">
+                        <div class="thumbnail active" onclick="changeProductImage(0)">🥤</div>
+                        <div class="thumbnail" onclick="changeProductImage(1)">📦</div>
+                        <div class="thumbnail" onclick="changeProductImage(2)">📋</div>
+                        <div class="thumbnail" onclick="changeProductImage(3)">🏅</div>
+                    </div>
+                </div>
+
+                <!-- Информация о товаре -->
+                <div class="product-info">
+                    <h1>Optimum Nutrition Whey Gold Standard 2.27 кг</h1>
+
+                    <div class="product-meta">
+                        <span class="product-sku">Артикул: ON-WGS-2270</span>
+                        <div class="product-rating-big">
+                            <span class="rating-stars">⭐⭐⭐⭐⭐</span>
+                            <span class="rating-count" onclick="switchTab('reviews')">(127 отзывов)</span>
+                        </div>
+                        <div class="availability in-stock">✓ В наличии (15 шт.)</div>
+                    </div>
+
+                    <div class="product-price-big">
+                        <span class="price-old-big">120 руб.</span>
+                        <span class="price-current-big">96 руб.</span>
+                        <span class="price-discount">-20%</span>
+                        <div class="price-per-unit">42.29 руб. за 100 г</div>
+                    </div>
+
+                    <div class="short-description">
+                        <p>Optimum Nutrition Gold Standard 100% Whey — это самый продаваемый сывороточный протеин в мире. Высокое качество, отличный вкус и проверенная эффективность делают его выбором №1 среди спортсменов.</p>
+                        <ul style="margin-top: 12px;">
+                            <li>✓ 24 г белка на порцию</li>
+                            <li>✓ 5.5 г BCAA для восстановления мышц</li>
+                            <li>✓ Быстрое усвоение</li>
+                        </ul>
+                    </div>
+
+                    <!-- Варианты вкуса -->
+                    <div class="product-variants">
+                        <label class="variant-label">Вкус:</label>
+                        <div class="variant-options">
+                            <button class="variant-btn active" onclick="changeVariant('Шоколад')">🍫 Шоколад</button>
+                            <button class="variant-btn" onclick="changeVariant('Ваниль')">🍦 Ваниль</button>
+                            <button class="variant-btn" onclick="changeVariant('Клубника')">🍓 Клубника</button>
+                            <button class="variant-btn" onclick="changeVariant('Банан')">🍌 Банан</button>
+                        </div>
+                    </div>
+
+                    <!-- Варианты веса -->
+                    <div class="product-variants">
+                        <label class="variant-label">Вес упаковки:</label>
+                        <div class="variant-options">
+                            <button class="variant-btn">908 г — 45 руб.</button>
+                            <button class="variant-btn active">2.27 кг — 96 руб.</button>
+                            <button class="variant-btn">4.54 кг — 175 руб.</button>
+                        </div>
+                    </div>
+
+                    <!-- Количество -->
+                    <div class="quantity-selector">
+                        <span class="quantity-label">Количество:</span>
+                        <div class="quantity-input">
+                            <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                            <input type="number" id="qtyField" class="qty-field" value="1" min="1" max="15">
+                            <button class="qty-btn" onclick="updateQty(1)">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки действий -->
+                    <div class="action-buttons">
+                        <button class="btn-buy-main" onclick="addToCart(1)">Добавить в корзину</button>
+                        <button class="btn-quick-buy">Купить в 1 клик</button>
+                        <button class="btn-icon-action">❤️</button>
+                    </div>
+
+                    <!-- Промокод -->
+                    <div class="promo-input-group">
+                        <input type="text" class="promo-input" placeholder="Введите промокод">
+                        <button class="btn-secondary" style="white-space: nowrap;">Применить</button>
+                    </div>
+
+                    <!-- Доставка и оплата -->
+                    <div class="delivery-info">
+                        <div class="delivery-item">
+                            <span style="font-size: 1.5rem;">🚚</span>
+                            <div>
+                                <strong>Доставка курьером</strong><br>
+                                <small>По Минску — 5 руб. Бесплатно от 50 руб.</small>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <span style="font-size: 1.5rem;">🏪</span>
+                            <div>
+                                <strong>Самовывоз</strong><br>
+                                <small>Бесплатно. ул. Победителей 23</small>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <span style="font-size: 1.5rem;">💳</span>
+                            <div>
+                                <strong>Оплата</strong><br>
+                                <small>Картой онлайн, наличными или картой курьеру</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Табы с подробной информацией -->
+            <div class="product-tabs">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="description" onclick="switchProductTab('description')">Описание</button>
+                    <button class="tab-btn" data-tab="specs" onclick="switchProductTab('specs')">Характеристики</button>
+                    <button class="tab-btn" data-tab="reviews" onclick="switchProductTab('reviews')">Отзывы (127)</button>
+                    <button class="tab-btn" data-tab="delivery" onclick="switchProductTab('delivery')">Доставка</button>
+                </div>
+
+                <!-- Описание -->
+                <div class="tab-content active" data-tab="description">
+                    <h3>Полное описание</h3>
+                    <p>Gold Standard 100% Whey от Optimum Nutrition — это эталон качества в мире спортивного питания. Продукт содержит смесь изолята, концентрата и пептидов сывороточного белка для максимально быстрого усвоения и эффективного восстановления мышц после тренировок.</p>
+
+                    <h4 style="margin-top: 24px;">Состав</h4>
+                    <p>Изолят сывороточного белка, концентрат сывороточного белка, гидролизованный сывороточный белок, натуральные и искусственные ароматизаторы, лецитин соевый, ацесульфам калия, сукралоза.</p>
+
+                    <h4 style="margin-top: 24px;">Способ применения</h4>
+                    <p>Смешайте 1 мерную ложку (30 г) с 200-250 мл воды или молока. Принимайте 1-3 раза в день: утром, после тренировки и между приемами пищи.</p>
+
+                    <h4 style="margin-top: 24px;">Противопоказания</h4>
+                    <p>Индивидуальная непереносимость компонентов, беременность и кормление грудью. Перед применением проконсультируйтесь с врачом.</p>
+                </div>
+
+                <!-- Характеристики -->
+                <div class="tab-content" data-tab="specs">
+                    <table class="specs-table">
+                        <tr><td>Бренд</td><td>Optimum Nutrition</td></tr>
+                        <tr><td>Страна производства</td><td>США</td></tr>
+                        <tr><td>Вес упаковки</td><td>2.27 кг</td></tr>
+                        <tr><td>Форма выпуска</td><td>Порошок</td></tr>
+                        <tr><td>Количество порций</td><td>73</td></tr>
+                        <tr><td>Белка на порцию</td><td>24 г</td></tr>
+                        <tr><td>Углеводов на порцию</td><td>3 г</td></tr>
+                        <tr><td>Жиров на порцию</td><td>1 г</td></tr>
+                        <tr><td>Калорий на порцию</td><td>120 ккал</td></tr>
+                        <tr><td>Срок годности</td><td>24 месяца</td></tr>
+                        <tr><td>Условия хранения</td><td>В сухом прохладном месте</td></tr>
+                    </table>
+                </div>
+
+                <!-- Отзывы -->
+                <div class="tab-content" data-tab="reviews">
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div>
+                                <div class="review-author">Александр М.</div>
+                                <div class="rating-stars">⭐⭐⭐⭐⭐</div>
+                            </div>
+                            <div class="review-date">15 января 2026</div>
+                        </div>
+                        <p>Отличный протеин! Пью уже 2 года, результаты на лицо. Вкус шоколада самый лучший. Хорошо размешивается, не образует комков.</p>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div>
+                                <div class="review-author">Дмитрий К.</div>
+                                <div class="rating-stars">⭐⭐⭐⭐⭐</div>
+                            </div>
+                            <div class="review-date">10 января 2026</div>
+                        </div>
+                        <p>Лучший протеин по соотношению цена/качество. Никаких побочек, отлично усваивается. Рекомендую новичкам и профи.</p>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div>
+                                <div class="review-author">Ольга П.</div>
+                                <div class="rating-stars">⭐⭐⭐⭐</div>
+                            </div>
+                            <div class="review-date">5 января 2026</div>
+                        </div>
+                        <p>Вкус ванили немного приторный, но это субъективно. По эффективности вопросов нет — мышцы восстанавливаются быстрее.</p>
+                    </div>
+                </div>
+
+                <!-- Доставка -->
+                <div class="tab-content" data-tab="delivery">
+                    <h3>Способы доставки</h3>
+                    <p><strong>Доставка курьером по Минску:</strong> 5 руб., бесплатно при заказе от 50 руб. Доставка осуществляется в течение 1-2 рабочих дней.</p>
+                    <p><strong>Доставка по Беларуси:</strong> от 7 руб. в зависимости от региона. Срок доставки 2-5 рабочих дней.</p>
+                    <p><strong>Самовывоз:</strong> бесплатно. Адрес: г. Минск, ул. Победителей 23. Режим работы: Пн-Вс 9:00-21:00.</p>
+
+                    <h3 style="margin-top: 24px;">Способы оплаты</h3>
+                    <p>Онлайн-оплата картой (Visa, MasterCard), наличными или картой курьеру при получении.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cross-sell секция -->
+        <div class="cross-sell-section">
+            <div class="container">
+                <div class="bundle-offer">
+                    <h2>🎁 Купить набором со скидкой 15%</h2>
+                    <div class="bundle-products">
+                        <div class="bundle-item">
+                            <div style="font-size: 4rem;">🥤</div>
+                            <p>Whey Protein</p>
+                        </div>
+                        <div class="bundle-plus">+</div>
+                        <div class="bundle-item">
+                            <div style="font-size: 4rem;">🧃</div>
+                            <p>Шейкер 700мл</p>
+                        </div>
+                        <div class="bundle-plus">+</div>
+                        <div class="bundle-item">
+                            <div style="font-size: 4rem;">⚡</div>
+                            <p>Креатин 300г</p>
+                        </div>
+                    </div>
+                    <div class="bundle-price">
+                        <div>
+                            <div style="text-decoration: line-through; opacity: 0.8;">150 руб.</div>
+                            <div style="font-size: 2rem; font-weight: 700;">127.50 руб.</div>
+                        </div>
+                        <button class="btn-primary" onclick="addToCart('bundle')">Купить набор</button>
+                    </div>
+                </div>
+
+                <h2>С этим товаром покупают</h2>
+                <div class="products-container" style="margin-top: 24px;">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="placeholder-img">🧃</div>
+                        </div>
+                        <h3 class="product-title">Шейкер BlenderBottle 700 мл</h3>
+                        <div class="product-price">
+                            <span class="current-price">12 руб.</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(7)">В корзину</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="placeholder-img">💊</div>
+                        </div>
+                        <h3 class="product-title">Витамин D3 5000 МЕ</h3>
+                        <div class="product-price">
+                            <span class="current-price">24 руб.</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(8)">В корзину</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="placeholder-img">🔥</div>
+                        </div>
+                        <h3 class="product-title">Креатин моногидрат 300г</h3>
+                        <div class="product-price">
+                            <span class="current-price">30 руб.</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(9)">В корзину</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sticky mobile button -->
+    <div class="sticky-buy-btn">
+        <button onclick="addToCart(1)">Добавить в корзину — 96 руб.</button>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 SportNutrition.by</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+    <script src="script.js"></script>
+    <script>
+        function updateQty(change) {
+            const field = document.getElementById('qtyField');
+            const newValue = parseInt(field.value) + change;
+            if (newValue >= 1 && newValue <= 15) {
+                field.value = newValue;
+            }
+        }
+
+        function switchProductTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabName);
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.toggle('active', content.dataset.tab === tabName);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог - SportNutrition.by</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .blog-page {
+            padding: 40px 0;
+        }
+
+        .blog-container {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
+        }
+
+        .blog-main h1 {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .blog-subtitle {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .blog-grid {
+            display: grid;
+            gap: 32px;
+        }
+
+        .blog-card {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 24px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            box-shadow: var(--box-shadow);
+            transform: translateY(-4px);
+        }
+
+        .blog-card-image {
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            cursor: pointer;
+        }
+
+        .blog-card-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+
+        .blog-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .blog-card h2:hover {
+            color: var(--primary-color);
+        }
+
+        .blog-excerpt {
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 16px;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        .blog-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .blog-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar-widget {
+            background: var(--gray-100);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-widget h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+        }
+
+        .search-widget input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            margin-bottom: 8px;
+        }
+
+        .categories-list {
+            list-style: none;
+        }
+
+        .categories-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .categories-list li:last-child {
+            border-bottom: none;
+        }
+
+        .categories-list a {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray-900);
+        }
+
+        .categories-list a:hover {
+            color: var(--primary-color);
+        }
+
+        .popular-posts {
+            list-style: none;
+        }
+
+        .popular-post-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .popular-post-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .popular-post-image {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .popular-post-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .popular-post-info h4:hover {
+            color: var(--primary-color);
+        }
+
+        .popular-post-date {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        .subscribe-widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+        }
+
+        .subscribe-widget h3 {
+            color: var(--white);
+        }
+
+        .subscribe-widget p {
+            margin-bottom: 16px;
+            opacity: 0.95;
+        }
+
+        .subscribe-widget input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: var(--border-radius);
+            margin-bottom: 12px;
+        }
+
+        .subscribe-widget button {
+            width: 100%;
+            padding: 12px;
+            background: var(--white);
+            color: var(--primary-color);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-card {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-content">
+                    <div class="logo">
+                        <a href="index.html">
+                            <svg width="40" height="40" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="18" fill="#007BFF" opacity="0.2"/>
+                                <path d="M20 8 L20 32 M12 20 L28 20" stroke="#007BFF" stroke-width="3"/>
+                            </svg>
+                            <span>SportNutrition</span>
+                        </a>
+                    </div>
+                    <div class="header-contacts">
+                        <a href="tel:+375291234567" class="contact-item">
+                            <span class="icon">📞</span> +375 (29) 123-45-67
+                        </a>
+                        <a href="mailto:info@sportnutrition.by" class="contact-item">
+                            <span class="icon">✉️</span> info@sportnutrition.by
+                        </a>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-login" onclick="openModal('loginModal')">
+                            <span class="icon">👤</span> Вход
+                        </button>
+                        <button class="btn-cart" onclick="window.location.href='cart.html'">
+                            <span class="icon">🛒</span>
+                            <span class="cart-count">2</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom sticky-header">
+            <div class="container">
+                <nav class="main-nav">
+                    <button class="burger-menu" onclick="toggleMobileMenu()">☰</button>
+                    <ul class="nav-menu" id="navMenu">
+                        <li><a href="catalog.html">📋 Каталог</a></li>
+                        <li><a href="index.html#about">О компании</a></li>
+                        <li><a href="blog.html" style="color: var(--primary-color);">Статьи</a></li>
+                        <li><a href="delivery.html">Доставка и оплата</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Поиск товаров..." id="searchInput" onkeyup="searchProducts()">
+                        <button class="search-btn">🔍</button>
+                        <div class="search-results" id="searchResults"></div>
+                    </div>
+                    <button class="btn-favorites">❤️</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="blog-page">
+        <div class="container">
+            <div class="breadcrumbs">
+                <a href="index.html">Главная</a> › <strong>Блог</strong>
+            </div>
+
+            <div class="blog-container">
+                <div class="blog-main">
+                    <h1>Блог о здоровье и спорте</h1>
+                    <p class="blog-subtitle">Полезные статьи о спортивном питании, БАДах, тренировках и здоровом образе жизни</p>
+
+                    <div class="blog-grid">
+                        <!-- Статья 1 -->
+                        <article class="blog-card">
+                            <div class="blog-card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                💪
+                            </div>
+                            <div class="blog-card-content">
+                                <span class="blog-category">Тренировки</span>
+                                <h2>Как правильно принимать протеин для набора мышечной массы</h2>
+                                <p class="blog-excerpt">
+                                    Разбираем оптимальные дозировки, время приема и сочетание протеина с другими добавками для максимального эффекта от тренировок.
+                                </p>
+                                <div class="blog-meta">
+                                    <span class="blog-meta-item">📅 18 января 2026</span>
+                                    <span class="blog-meta-item">👤 Андрей Петров</span>
+                                    <span class="blog-meta-item">⏱️ 5 мин чтения</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Статья 2 -->
+                        <article class="blog-card">
+                            <div class="blog-card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                ☀️
+                            </div>
+                            <div class="blog-card-content">
+                                <span class="blog-category">Витамины</span>
+                                <h2>Витамин D3: почему он так важен зимой в Беларуси</h2>
+                                <p class="blog-excerpt">
+                                    Дефицит витамина D — распространенная проблема в наших широтах. Узнайте, какие дозировки безопасны и как правильно принимать D3+K2.
+                                </p>
+                                <div class="blog-meta">
+                                    <span class="blog-meta-item">📅 15 января 2026</span>
+                                    <span class="blog-meta-item">👤 Мария Иванова</span>
+                                    <span class="blog-meta-item">⏱️ 7 мин чтения</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Статья 3 -->
+                        <article class="blog-card">
+                            <div class="blog-card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                🥗
+                            </div>
+                            <div class="blog-card-content">
+                                <span class="blog-category">Питание</span>
+                                <h2>5 лучших протеиновых рецептов для завтрака</h2>
+                                <p class="blog-excerpt">
+                                    Вкусные и полезные рецепты с протеином: панкейки, смузи, овсянка и другие варианты здорового завтрака для спортсменов.
+                                </p>
+                                <div class="blog-meta">
+                                    <span class="blog-meta-item">📅 12 января 2026</span>
+                                    <span class="blog-meta-item">👤 Елена Смирнова</span>
+                                    <span class="blog-meta-item">⏱️ 4 мин чтения</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Статья 4 -->
+                        <article class="blog-card">
+                            <div class="blog-card-image" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
+                                🔥
+                            </div>
+                            <div class="blog-card-content">
+                                <span class="blog-category">Похудение</span>
+                                <h2>L-карнитин: работает ли он для жиросжигания?</h2>
+                                <p class="blog-excerpt">
+                                    Разбираем научные исследования об эффективности L-карнитина, оптимальные дозировки и сочетание с тренировками.
+                                </p>
+                                <div class="blog-meta">
+                                    <span class="blog-meta-item">📅 8 января 2026</span>
+                                    <span class="blog-meta-item">👤 Дмитрий Козлов</span>
+                                    <span class="blog-meta-item">⏱️ 6 мин чтения</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Статья 5 -->
+                        <article class="blog-card">
+                            <div class="blog-card-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                💊
+                            </div>
+                            <div class="blog-card-content">
+                                <span class="blog-category">БАДы</span>
+                                <h2>Омега-3: польза для сердца и мозга</h2>
+                                <p class="blog-excerpt">
+                                    Почему Омега-3 необходима каждому, как выбрать качественный продукт и какие дозировки рекомендуют врачи.
+                                </p>
+                                <div class="blog-meta">
+                                    <span class="blog-meta-item">📅 5 января 2026</span>
+                                    <span class="blog-meta-item">👤 Ольга Николаева</span>
+                                    <span class="blog-meta-item">⏱️ 8 мин чтения</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Статья 6 -->
+                        <article class="blog-card">
+                            <div class="blog-card-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                                ⚡
+                            </div>
+                            <div class="blog-card-content">
+                                <span class="blog-category">Спортпит</span>
+                                <h2>BCAA или EAA: что лучше выбрать для восстановления?</h2>
+                                <p class="blog-excerpt">
+                                    Сравниваем составы, эффективность и ситуации, когда стоит предпочесть BCAA или полный комплекс незаменимых аминокислот.
+                                </p>
+                                <div class="blog-meta">
+                                    <span class="blog-meta-item">📅 2 января 2026</span>
+                                    <span class="blog-meta-item">👤 Сергей Волков</span>
+                                    <span class="blog-meta-item">⏱️ 5 мин чтения</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Пагинация -->
+                    <div class="pagination" style="margin-top: 40px;">
+                        <button class="page-btn">‹</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">›</button>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="blog-sidebar">
+                    <!-- Поиск -->
+                    <div class="sidebar-widget search-widget">
+                        <h3>Поиск по блогу</h3>
+                        <input type="text" placeholder="Введите запрос...">
+                        <button class="btn-secondary" style="width: 100%;">Найти</button>
+                    </div>
+
+                    <!-- Категории -->
+                    <div class="sidebar-widget">
+                        <h3>Категории</h3>
+                        <ul class="categories-list">
+                            <li><a href="#">Тренировки <span>(12)</span></a></li>
+                            <li><a href="#">Витамины <span>(18)</span></a></li>
+                            <li><a href="#">Питание <span>(24)</span></a></li>
+                            <li><a href="#">Похудение <span>(15)</span></a></li>
+                            <li><a href="#">БАДы <span>(22)</span></a></li>
+                            <li><a href="#">Спортпит <span>(31)</span></a></li>
+                            <li><a href="#">Новости <span>(8)</span></a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Популярные статьи -->
+                    <div class="sidebar-widget">
+                        <h3>Популярное</h3>
+                        <ul class="popular-posts">
+                            <li class="popular-post-item">
+                                <div class="popular-post-image">💪</div>
+                                <div class="popular-post-info">
+                                    <h4>Как правильно принимать протеин</h4>
+                                    <div class="popular-post-date">18 января 2026</div>
+                                </div>
+                            </li>
+                            <li class="popular-post-item">
+                                <div class="popular-post-image">☀️</div>
+                                <div class="popular-post-info">
+                                    <h4>Витамин D3: важность зимой</h4>
+                                    <div class="popular-post-date">15 января 2026</div>
+                                </div>
+                            </li>
+                            <li class="popular-post-item">
+                                <div class="popular-post-image">🔥</div>
+                                <div class="popular-post-info">
+                                    <h4>L-карнитин для жиросжигания</h4>
+                                    <div class="popular-post-date">8 января 2026</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Подписка -->
+                    <div class="sidebar-widget subscribe-widget">
+                        <h3>Подписка на новости</h3>
+                        <p>Получайте новые статьи и эксклюзивные промокоды на email</p>
+                        <form onsubmit="subscribe(event)">
+                            <input type="email" placeholder="Ваш email" required>
+                            <button type="submit">Подписаться</button>
+                        </form>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <svg width="40" height="40" viewBox="0 0 40 40">
+                            <circle cx="20" cy="20" r="18" fill="#007BFF" opacity="0.3"/>
+                            <path d="M20 8 L20 32 M12 20 L28 20" stroke="#007BFF" stroke-width="3"/>
+                        </svg>
+                        <span>SportNutrition</span>
+                    </div>
+                    <p>Качественное спортивное питание и БАДы с доставкой по Беларуси</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Контакты</h4>
+                    <p>📍 г. Минск, ул. Победителей 23</p>
+                    <p>📞 +375 (29) 123-45-67</p>
+                    <p>✉️ info@sportnutrition.by</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SportNutrition.by</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html>
